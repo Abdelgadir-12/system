@@ -1,5 +1,5 @@
-
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Bell, X } from "lucide-react";
 
 interface NotificationPreviewProps {
@@ -7,6 +7,7 @@ interface NotificationPreviewProps {
   service?: string;
   date?: string;
   time?: string;
+  hasAppointment?: boolean;
 }
 
 export function NotificationPreview({
@@ -14,19 +15,24 @@ export function NotificationPreview({
   service = "Pet Checkup",
   date = "Tomorrow",
   time = "10:00 AM",
+  hasAppointment = false,
 }: NotificationPreviewProps) {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Show notification after a delay
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 3000);
+    // Only show notification if there's an active appointment
+    if (hasAppointment) {
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
+      return () => clearTimeout(timer);
+    }
+  }, [hasAppointment]);
 
-  if (!isVisible) return null;
+  // Don't render if there's no appointment or notification is dismissed
+  if (!isVisible || !hasAppointment) return null;
 
   return (
     <div className="fixed bottom-5 right-5 z-50 max-w-sm w-full animate-fade-in">
@@ -66,8 +72,19 @@ export function NotificationPreview({
           </div>
           
           <div className="flex justify-between gap-2">
-            <button className="text-xs text-pet-blue-dark font-medium">Reschedule</button>
-            <button className="text-xs px-3 py-1.5 bg-pet-blue-dark text-white rounded-lg">
+            <button 
+              className="text-xs text-pet-blue-dark font-medium"
+              onClick={() => navigate("/appointment")}
+            >
+              Reschedule
+            </button>
+            <button 
+              className="text-xs px-3 py-1.5 bg-pet-blue-dark text-white rounded-lg"
+              onClick={() => {
+                alert("Appointment confirmed!");
+                setIsVisible(false); 
+              }}
+            >
               Confirm
             </button>
           </div>

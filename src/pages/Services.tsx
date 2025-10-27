@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ServiceCard } from "@/components/ServiceCard";
 import { Stethoscope, Scissors, Syringe, ShoppingBag, HeartPulse, Microscope, Beaker, Brain, Pill, Cat, Dog, Rabbit, MapPin } from "lucide-react";
@@ -25,22 +24,22 @@ const Services = () => {
         items: [
           {
             service: "General Check-up",
-            price: "₱2,500 - ₱3,750",
+            price: "₱1,000 - ₱3,750",
             description: "Comprehensive physical examination"
           },
           {
             service: "New Patient Consultation",
-            price: "₱3,750 - ₱5,000",
+            price: "₱2,000 - ₱5,000",
             description: "Initial visit with health assessment"
           },
           {
             service: "Follow-up Appointment",
-            price: "₱2,000 - ₱3,000",
+            price: "₱1,000 - ₱3,000",
             description: "Progress evaluation visit"
           },
           {
             service: "Emergency Consultation",
-            price: "₱5,000 - ₱7,500",
+            price: "₱1,000 - ₱7,500",
             description: "Urgent care examination"
           }
         ]
@@ -49,18 +48,13 @@ const Services = () => {
         category: "Preventive Care",
         items: [
           {
-            service: "Annual Wellness Package",
-            price: "₱7,500 - ₱12,500",
-            description: "Complete yearly check-up with basic tests"
-          },
-          {
             service: "Senior Pet Care Package",
-            price: "₱10,000 - ₱15,000",
+            price: "₱5,000 - ₱15,000",
             description: "Enhanced check-up for older pets"
           },
           {
             service: "Dental Check-up",
-            price: "₱3,000 - ₱4,500",
+            price: "₱1,000 - ₱4,500",
             description: "Oral examination and assessment"
           }
         ]
@@ -104,6 +98,51 @@ const Services = () => {
             service: "Feline Leukemia",
             price: "₱1,500 - ₱2,000",
             description: "For cats with outdoor access"
+          },
+          {
+            service: "2 Weeks Old: 1st Deworming",
+            price: "₱500 - ₱750",
+            description: "Initial deworming for puppies."
+          },
+          {
+            service: "4 Weeks Old: 2nd Deworming",
+            price: "₱500 - ₱750",
+            description: "Follow-up deworming for puppies."
+          },
+          {
+            service: "6 Weeks Old: CPV/CV (1st Vaccine)",
+            price: "₱1,000 - ₱1,500",
+            description: "First vaccine for puppies."
+          },
+          {
+            service: "8 Weeks Old: DHLPPI/+5L4",
+            price: "₱1,250 - ₱1,750",
+            description: "Second vaccine for puppies."
+          },
+          {
+            service: "10 Weeks Old: DHLPPI/+CV",
+            price: "₱1,250 - ₱1,750",
+            description: "Third vaccine for puppies."
+          },
+          {
+            service: "12 Weeks Old: DHLPPI + Rabies",
+            price: "₱1,500 - ₱2,000",
+            description: "Final puppy vaccine and rabies shot."
+          },
+          {
+            service: "24 Weeks Old: Rabies booster + Kennel Cough",
+            price: "₱1,750 - ₱2,250",
+            description: "Booster shots for rabies and kennel cough."
+          },
+          {
+            service: "36 Weeks Old: 5L4 (annual henceforth) + AR",
+            price: "₱2,000 - ₱2,500",
+            description: "Annual booster for adult dogs."
+          },
+          {
+            service: "6 Months Old: Heartworm check-up",
+            price: "₱1,500 - ₱2,000",
+            description: "Heartworm test and start of monthly preventive."
           }
         ]
       }
@@ -114,22 +153,22 @@ const Services = () => {
         items: [
           {
             service: "Bath & Brush (Small)",
-            price: "₱1,500 - ₱2,250",
+            price: "₱500 - ₱600",
             description: "For dogs under 25lbs"
           },
           {
             service: "Bath & Brush (Medium)",
-            price: "₱2,250 - ₱3,000",
+            price: "₱600 - ₱700",
             description: "For dogs 25-50lbs"
           },
           {
             service: "Bath & Brush (Large)",
-            price: "₱3,000 - ₱4,000",
+            price: "₱700 - ₱900",
             description: "For dogs over 50lbs"
           },
           {
             service: "Cat Grooming",
-            price: "₱2,500 - ₱3,500",
+            price: "₱1000 - ₱100",
             description: "Specialized feline grooming service"
           }
         ]
@@ -139,17 +178,17 @@ const Services = () => {
         items: [
           {
             service: "Full Groom (Small)",
-            price: "₱3,000 - ₱4,000",
+            price: "₱ 500",
             description: "Bath, haircut, nails, ears for small pets"
           },
           {
             service: "Full Groom (Medium)",
-            price: "₱4,000 - ₱5,000",
+            price: "₱ 700",
             description: "Bath, haircut, nails, ears for medium pets"
           },
           {
             service: "Full Groom (Large)",
-            price: "₱5,000 - ₱6,500",
+            price: "₱ 1000",
             description: "Bath, haircut, nails, ears for large pets"
           }
         ]
@@ -161,22 +200,22 @@ const Services = () => {
         items: [
           {
             service: "Spay/Neuter (Cat)",
-            price: "₱7,500 - ₱15,000",
+            price: "₱2,000 - ₱15,000",
             description: "Reproductive surgery for cats"
           },
           {
             service: "Spay/Neuter (Dog Small)",
-            price: "₱10,000 - ₱20,000",
+            price: "₱1000 - ₱20,000",
             description: "Reproductive surgery for small dogs"
           },
           {
             service: "Spay/Neuter (Dog Large)",
-            price: "₱15,000 - ₱25,000",
+            price: "₱2,000 - ₱15,000",
             description: "Reproductive surgery for large dogs"
           },
           {
             service: "Dental Cleaning",
-            price: "₱15,000 - ₱30,000",
+            price: "₱2,000 - ₱15,000",
             description: "Professional cleaning under anesthesia"
           }
         ]
@@ -186,17 +225,17 @@ const Services = () => {
         items: [
           {
             service: "Tumor Removal",
-            price: "₱20,000 - ₱50,000+",
+            price: "₱5,000 - ₱30,000+",
             description: "Depending on size and location"
           },
           {
             service: "Orthopedic Surgery",
-            price: "₱75,000 - ₱200,000+",
+            price: "₱20,000 - ₱50,000",
             description: "Joint repair or bone fixation"
           },
           {
             service: "Soft Tissue Surgery",
-            price: "₱40,000 - ₱125,000+",
+            price: "₱20,000 - ₱50,000",
             description: "Internal organ procedures"
           }
         ]
@@ -206,7 +245,7 @@ const Services = () => {
 
   return (
     <div className="min-h-screen pt-20">
-      {/* Services Header */}
+      {}
       <section className="bg-pet-gray py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
@@ -218,72 +257,107 @@ const Services = () => {
         </div>
       </section>
       
-      {/* Services Grid */}
+      {}
       <section className="section-container">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ServiceCard
-            title="Veterinary Care"
-            description="Complete medical care including examinations, diagnostics, treatments, and preventive services."
-            icon={Stethoscope}
-          />
-          
-          <ServiceCard
-            title="Pet Grooming"
-            description="Professional grooming services to keep your pet clean, comfortable, and looking their best."
-            icon={Scissors}
-            iconClassName="from-pet-teal to-pet-teal-dark/90"
-          />
-          
-          <ServiceCard
-            title="Vaccinations"
-            description="Essential vaccines to protect your pet against common infectious diseases."
-            icon={Syringe}
-            iconClassName="from-pet-blue-dark to-pet-blue"
-          />
-          
-          <ServiceCard
-            title="Pet Shop"
-            description="Quality pet food, toys, accessories, and healthcare products for all your pet's needs."
-            icon={ShoppingBag}
-            iconClassName="from-pet-teal-dark to-pet-teal"
-          />
-          
-          <ServiceCard
-            title="Surgery"
-            description="From routine procedures to complex operations, with modern equipment and techniques."
-            icon={HeartPulse}
-          />
-          
-          <ServiceCard
-            title="Diagnostic Services"
-            description="Advanced testing and imaging to accurately diagnose health conditions."
-            icon={Microscope}
-            iconClassName="from-pet-teal to-pet-teal-dark/90"
-          />
-          
-          <ServiceCard
-            title="Laboratory Testing"
-            description="In-house and reference lab services for fast and accurate test results."
-            icon={Beaker}
-            iconClassName="from-pet-blue-dark to-pet-blue"
-          />
-          
-          <ServiceCard
-            title="Behavioral Consultations"
-            description="Professional advice for addressing behavioral issues and training challenges."
-            icon={Brain}
-            iconClassName="from-pet-teal-dark to-pet-teal"
-          />
-          
-          <ServiceCard
-            title="Pharmacy Services"
-            description="Convenient access to medications and prescription diets for your pet."
-            icon={Pill}
-          />
+          <Link to="/veterinary-care">
+            <ServiceCard
+              title="Veterinary Care"
+              description="Complete medical care including examinations, diagnostics, treatments, and preventive services."
+              icon={Stethoscope}
+            />
+          </Link>
+
+          <Link to="/pet-grooming">
+            <ServiceCard
+              title="Pet Grooming"
+              description="Professional grooming services to keep your pet clean, comfortable, and looking their best."
+              icon={Scissors}
+              iconClassName="from-pet-teal to-pet-teal-dark/90"
+            />
+          </Link>
+
+          <Link to="/vaccination">
+            <ServiceCard
+              title="Vaccinations"
+              description="Essential vaccines to protect your pet against common infectious diseases."
+              icon={Syringe}
+              iconClassName="from-pet-blue-dark to-pet-blue"
+            />
+          </Link>
+
+          <Link to="/pet-shop">
+            <ServiceCard
+              title="Pet Shop"
+              description="Quality pet food, toys, accessories, and healthcare products for all your pet's needs."
+              icon={ShoppingBag}
+              iconClassName="from-pet-teal-dark to-pet-teal"
+            />
+          </Link>
+
+          <Link to="/surgery-with-gas-anesthetic-machine">
+            <ServiceCard
+              title="Surgery w/ Gas Anesthetic Machine"
+              description="From routine procedures to complex operations, with modern equipment and techniques."
+              icon={HeartPulse}
+            />
+          </Link>
+
+          <Link to="/tonometry">
+            <ServiceCard
+              title="Tonometry"
+              description="Eye pressure testing to detect and manage glaucoma in pets."
+              icon={Brain}
+              iconClassName="from-pet-blue-dark to-pet-blue"
+            />
+          </Link>
+
+          <Link to="/blood-chemistry">
+            <ServiceCard
+              title="Blood Chemistry"
+              description="Comprehensive blood tests to assess organ function and overall health."
+              icon={Beaker}
+              iconClassName="from-pet-red to-pet-yellow-dark/90 border-2 border-pet-red shadow-lg shadow-pet-yellow/30"
+            />
+          </Link>
+
+          <Link to="/digital-xray">
+            <ServiceCard
+              title="Digital X-Ray"
+              description="High-quality imaging for accurate diagnosis of internal conditions."
+              icon={Microscope}
+              iconClassName="from-pet-blue-dark to-pet-blue"
+            />
+          </Link>
+
+          <Link to="/dentistry">
+            <ServiceCard
+              title="Dentistry"
+              description="Comprehensive dental care to maintain your pet's oral health."
+              icon={HeartPulse}
+              iconClassName="from-pet-teal to-pet-teal-dark/90"
+            />
+          </Link>
+
+          <Link to="/pharmacy-services">
+            <ServiceCard
+              title="Pharmacy Services"
+              description="Convenient access to medications and prescription diets for your pet."
+              icon={Pill}
+            />
+          </Link>
+
+          <Link to="/hematology">
+            <ServiceCard
+              title="Hematology"
+              description="Healthy blood, healthy life – advancing hematology for a better tomorrow."
+              icon={Pill}
+            />
+          </Link>
         </div>
       </section>
       
-      {/* Species-Specific Care */}
+      {}
       <section className="bg-pet-gray py-16">
         <div className="container mx-auto px-4">
           <h2 className="section-title">Specialized Care for All Pets</h2>
@@ -316,23 +390,23 @@ const Services = () => {
               <div className="w-16 h-16 bg-pet-blue/20 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Rabbit className="text-pet-blue-dark" size={32} />
               </div>
-              <h3 className="text-xl font-medium mb-2">Exotic Pets</h3>
+              <h3 className="text-xl font-medium mb-2">Domestic Pets</h3>
               <p className="text-muted-foreground">
-                Expert care for birds, reptiles, small mammals and other exotic pets.
+                Expert care for domestic pets including birds, reptiles, and small mammals.
               </p>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Pricing & Services */}
+      {}
       <section className="section-container">
         <h2 className="section-title">Service Pricing</h2>
         <p className="section-subtitle">
           Transparent pricing for our most common services. All prices are approximate and may vary based on your pet's specific needs.
         </p>
         
-        {/* Pricing Tabs */}
+        {}
         <div className="max-w-4xl mx-auto mt-8">
           <div className="flex flex-wrap justify-center gap-2 mb-8">
             {Object.keys(pricingData).map((key) => (
@@ -350,7 +424,7 @@ const Services = () => {
             ))}
           </div>
           
-          {/* Pricing Tables */}
+          {}
           <div className="space-y-8 animate-fade-in">
             {pricingData[activeTab].map((category, index) => (
               <div key={index}>
@@ -367,7 +441,11 @@ const Services = () => {
                       key={itemIndex}
                       className="grid grid-cols-12 py-3 px-4 border-t border-gray-100 text-sm"
                     >
-                      <div className="col-span-5 md:col-span-6 font-medium">{item.service}</div>
+                      <div className="col-span-5 md:col-span-6 font-medium">
+                        <Link to={`/vaccination/${item.service.replace(/\s+/g, '-').toLowerCase()}`}>
+                          {item.service}
+                        </Link>
+                      </div>
                       <div className="col-span-3 md:col-span-2 text-pet-blue-dark">{item.price}</div>
                       <div className="col-span-4 md:col-span-4 text-muted-foreground">{item.description}</div>
                     </div>
@@ -379,11 +457,8 @@ const Services = () => {
         </div>
         
         <div className="text-center mt-12">
-          <p className="text-muted-foreground mb-4">
-            Ready to schedule an appointment for any of our services?
-          </p>
-          <Link 
-            to="/appointment" 
+          <Link
+            to="/appointment"
             className="inline-block px-6 py-3 bg-pet-blue-dark text-white rounded-lg hover:bg-pet-blue-dark/90 transition-colors shadow-sm"
           >
             Book Your Appointment

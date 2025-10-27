@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ChevronDown, Search } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -21,12 +20,12 @@ const FAQ = () => {
     }));
   };
   
-  // FAQ data
+  
   const faqItems: FAQItem[] = [
-    // General Questions
+    
     {
       question: "What are your clinic hours?",
-      answer: "Our clinic is open Monday through Friday from 8:00 AM to 8:00 PM, Saturday from 9:00 AM to 5:00 PM, and Sunday from 10:00 AM to 4:00 PM. Emergency services are available 24/7.",
+      answer: "Our clinic is open Monday through Friday from 8:00 AM to 5:00 PM, Saturday from 8:00 AM to 4:00 PM, and Sunday from 8:00 AM to 4:00 PM. .",
       category: "general"
     },
     {
@@ -36,11 +35,11 @@ const FAQ = () => {
     },
     {
       question: "What types of animals do you treat?",
-      answer: "We primarily treat dogs, cats, and small mammals like rabbits, guinea pigs, and hamsters. We also offer limited services for birds and reptiles. If you have an exotic pet, please call ahead to confirm we can provide appropriate care.",
+      answer: "We primarily treat dogs, cats, and small mammals like rabbits, guinea pigs, and hamsters. We also offer limited services for birds and reptiles. If you have an exotic pet, please visit us to confirm we can provide appropriate care.",
       category: "general"
     },
     
-    // Checkups
+    
     {
       question: "How often should my pet have a checkup?",
       answer: "We recommend annual wellness exams for adult pets in good health. Senior pets (typically over 7 years for dogs and over 10 years for cats) should have checkups every 6 months. Puppies and kittens require more frequent visits for initial vaccinations and monitoring.",
@@ -57,7 +56,7 @@ const FAQ = () => {
       category: "checkups"
     },
     
-    // Vaccinations
+    
     {
       question: "Which vaccines does my pet need?",
       answer: "Core vaccines for dogs include rabies, distemper, parvovirus, and adenovirus. For cats, core vaccines include rabies, feline viral rhinotracheitis, calicivirus, and panleukopenia. Non-core vaccines depend on your pet's lifestyle, environment, and risk factors. We'll recommend an appropriate vaccination schedule during your visit.",
@@ -74,7 +73,7 @@ const FAQ = () => {
       category: "vaccinations"
     },
     
-    // Surgery
+    
     {
       question: "What surgical procedures do you offer?",
       answer: "We provide a wide range of surgical services including spay/neuter, mass removals, dental extractions, wound repairs, orthopedic procedures, and various soft tissue surgeries. All surgeries are performed with modern equipment and comprehensive pain management protocols.",
@@ -101,7 +100,7 @@ const FAQ = () => {
       category: "surgery"
     },
     
-    // Grooming
+    
     {
       question: "What grooming services do you offer?",
       answer: "Our grooming services include baths, haircuts, nail trims, ear cleaning, anal gland expression, de-shedding treatments, and specialized skin treatments. We customize our services to match your pet's breed, coat type, and specific needs.",
@@ -119,7 +118,7 @@ const FAQ = () => {
     },
   ];
   
-  // Filter FAQ items based on category and search query
+  
   const filteredFAQs = faqItems.filter(item => {
     const matchesCategory = activeCategory === "all" || item.category === activeCategory;
     const matchesSearch = !searchQuery || 
@@ -139,7 +138,7 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen pt-20">
-      {/* Page Header */}
+      {}
       <section className="bg-pet-gray py-16">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
@@ -151,10 +150,10 @@ const FAQ = () => {
         </div>
       </section>
       
-      {/* FAQ Section */}
+      {}
       <section className="section-container">
         <div className="max-w-4xl mx-auto">
-          {/* Search and Category Filter */}
+          {}
           <div className="mb-10 space-y-6">
             <div className="relative">
               <input
@@ -184,7 +183,7 @@ const FAQ = () => {
             </div>
           </div>
           
-          {/* FAQ Items */}
+          {}
           <div className="space-y-4">
             {filteredFAQs.length > 0 ? (
               filteredFAQs.map((item, index) => (
@@ -230,7 +229,7 @@ const FAQ = () => {
             )}
           </div>
           
-          {/* Still Have Questions */}
+          {}
           <div className="mt-16 text-center p-8 bg-pet-blue/5 rounded-xl border border-pet-blue/20">
             <h2 className="text-2xl font-medium mb-3">Still Have Questions?</h2>
             <p className="text-muted-foreground mb-6 max-w-xl mx-auto">
@@ -243,12 +242,6 @@ const FAQ = () => {
               >
                 Book an Appointment
               </Link>
-              <a
-                href="tel:+1234567890"
-                className="px-5 py-2.5 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                Call Us
-              </a>
             </div>
           </div>
         </div>

@@ -6,15 +6,15 @@ import { Stethoscope, Scissors, Syringe, ShoppingBag, ChevronRight, Clock, Calen
 import { VetProfileCard } from "@/components/VetProfileCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { LocationMap } from "@/components/LocationMap";
-import { FloatingChatbot } from "@/components/FloatingChatbot";
+
 
 const Index = () => {
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
+      {}
       <HeroSection />
       
-      {/* Services Overview */}
+      {}
       <section className="section-container">
         <h2 className="section-title">Our Services</h2>
         <p className="section-subtitle">
@@ -26,19 +26,19 @@ const Index = () => {
             title="Veterinary Care"
             description="Professional medical care for pets, including diagnostics, treatments, and preventive services."
             icon={Stethoscope}
-            priceRange="₱1,500 - ₱5,000"
+            priceRange="₱1,500 - ₱2,500"
           />
           
           <ServiceCard
             title="Pet Grooming"
             description="Complete grooming services including bathing, haircuts, nail trimming, and ear cleaning."
             icon={Scissors}
-            priceRange="₱800 - ₱2,500"
+            priceRange="₱800 - ₱1,500"
             iconClassName="from-pet-teal to-pet-teal-dark/90"
           />
           
           <ServiceCard
-            title="Vaccinations"
+            title="Vaccinations & Deworming"
             description="Essential vaccines to protect your pet against common diseases and maintain their health."
             icon={Syringe}
             priceRange="₱500 - ₱1,800"
@@ -61,7 +61,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Our Veterinarians */}
+      {}
       <section className="bg-pet-gray py-16 sm:py-24">
         <div className="container mx-auto px-4">
           <h2 className="section-title">Meet Our Expert Veterinarians</h2>
@@ -71,42 +71,23 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             <VetProfileCard
-              name="Dr. Maria Santos"
+              name="Dr. Yolly Ann Molintds"
               specialty="General Veterinary Medicine"
               experience={8}
-              education="University of the Philippines"
-              image="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-              description="Dr. Santos specializes in preventive care and has a special interest in feline medicine. She is known for her gentle approach with anxious pets."
-            />
+              image=""
+              description="Dr. Yolly specializes in preventive care and has a special interest in feline medicine. She is known for her gentle approach with anxious pets."            />
             
             <VetProfileCard
-              name="Dr. Antonio Reyes"
+              name="Dr. Rosaline"
               specialty="Veterinary Surgery"
-              experience={12}
-              education="De La Salle University"
-              image="https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
-              description="With over a decade of surgical experience, Dr. Reyes has performed thousands of procedures from routine spays to complex orthopedic surgeries."
-            />
-            
-            <VetProfileCard
-              name="Dr. Sophia Cruz"
-              specialty="Exotic Pet Medicine"
-              experience={6}
-              education="Ateneo de Manila University"
-              image="https://images.unsplash.com/photo-1594824476967-48c8b964273f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-              description="Dr. Cruz has specialized training in the care of birds, reptiles, and small mammals. She is passionate about exotic pet welfare and education."
-            />
-          </div>
-          
-          <div className="text-center mt-10">
-            <Link to="/veterinarians" className="inline-flex items-center gap-1 text-pet-blue-dark font-medium hover:underline">
-              View All Veterinarians <ChevronRight size={16} />
-            </Link>
+              experience={5}
+              image=""
+              description="With over a decade of surgical experience, Dr. Rosaline has performed thousands of procedures from routine spays to complex orthopedic surgeries."            />
           </div>
         </div>
       </section>
       
-      {/* Why Choose Us */}
+      {}
       <section className="bg-white py-16 sm:py-24">
         <div className="container mx-auto px-4">
           <h2 className="section-title">Why Choose Us</h2>
@@ -131,7 +112,7 @@ const Index = () => {
               </div>
               <h3 className="text-xl font-medium mb-2">Convenient Hours</h3>
               <p className="text-muted-foreground">
-                We offer flexible appointment times and emergency services to ensure your pet receives care when needed.
+                We offer flexible appointment times and services to ensure your pet receives care when needed.
               </p>
             </div>
             
@@ -148,7 +129,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Testimonials */}
+      {}
       <section className="section-container bg-pet-gray/30">
         <h2 className="section-title">What Our Clients Say</h2>
         <p className="section-subtitle">
@@ -158,31 +139,28 @@ const Index = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           <TestimonialCard
             name="Marco Diaz"
-            petType="Dog Owner"
+            petType="Cat Owner"
             rating={5}
-            image="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-            testimonial="Purrfect Paw has been taking care of my Labrador for years. Their team is professional, caring, and always goes the extra mile. I wouldn't trust anyone else with my pet's health!"
+            testimonial=" The queue for grooming is a bit long usually specially that's there's only one available groomer most of the time"
           />
           
           <TestimonialCard
             name="Elena Gomez"
-            petType="Cat Owner"
+            petType="Dog Owner"
             rating={5}
-            image="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80"
-            testimonial="My cat had an emergency late at night, and the team at Purrfect Paw was available immediately. They handled everything with calm expertise. I'm incredibly grateful for their care."
+            testimonial=" I brought my dog here for a check up back when I was still living in Benguet. The doctor was very informative about my dog's case and taught me what I should avoid and how I should take care of my dog properly. The laboratory fees are also not expensive compared to other vet clinics."
           />
           
           <TestimonialCard
             name="Michael Tan"
             petType="Rabbit Owner"
             rating={4}
-            image="https://images.unsplash.com/photo-1531384441138-2736e62e0919?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"
-            testimonial="Finding a vet who knows exotic pets was challenging until I discovered Purrfect Paw. Dr. Cruz has been wonderful with my rabbit, providing specialized care I couldn't find elsewhere."
+            testimonial=" I had trouble looking for it but when I got there though the staff was accommodating. There was no line as well so I  did not have to wait that long. The Doctor was very helpful and informative since I was a first time pet owner. Really happy with the service and location is accessible to me."
           />
         </div>
       </section>
       
-      {/* Appointment CTA */}
+      {}
       <section className="section-container">
         <div className="relative rounded-3xl overflow-hidden">
           <div className="absolute inset-0 -z-10">
@@ -211,11 +189,13 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Find Us / Location Map */}
+      {}
+      
+      {}
       <section className="section-container bg-pet-gray/30">
         <h2 className="section-title">Find Us in Baguio City</h2>
         <p className="section-subtitle">
-          Our clinic is conveniently located in the heart of Baguio City. Visit us or find nearby veterinary locations.
+          Our clinic is conveniently located in the heart of Baguio City. Visit us now.
         </p>
         
         <div className="mt-8 rounded-xl overflow-hidden shadow-lg">
@@ -226,20 +206,25 @@ const Index = () => {
           <div className="flex items-start gap-4">
             <MapPin className="text-pet-blue-dark flex-shrink-0 mt-1" />
             <div>
-              <h3 className="font-medium text-lg">Purrfect Paw Veterinary Clinic</h3>
-              <p className="text-muted-foreground">123 Session Road, Baguio City, Philippines</p>
+              <h3 className="font-medium text-lg">Angeles Pet Care Center - Baguio</h3>
+              <p className="text-muted-foreground"> casa vallejo Bldg.2 2nd floor, Baguio, 2600 Benguet </p>
+              <a 
+              href="https://maps.app.goo.gl/Ef6T4AXLUybfrERF8?g_st=iw" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-pet-blue-dark font-medium hover:underline"
+             >
+              Get Directions
+             </a>
               <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-medium">Hours</h4>
-                  <p className="text-sm text-muted-foreground">Monday - Friday: 8am - 8pm</p>
-                  <p className="text-sm text-muted-foreground">Saturday: 9am - 6pm</p>
-                  <p className="text-sm text-muted-foreground">Sunday: 10am - 4pm</p>
+                  <p className="text-sm text-muted-foreground">( 8am - 12pm ) - (2pm - 5pm )</p>
                 </div>
+
                 <div>
                   <h4 className="font-medium">Contact</h4>
-                  <p className="text-sm text-muted-foreground">Phone: (074) 123-4567</p>
-                  <p className="text-sm text-muted-foreground">Email: info@purrfectpaw.ph</p>
-                  <p className="text-sm text-muted-foreground">Emergency: (074) 987-6543</p>
+                  <p className="text-sm text-muted-foreground">Phone: 09985514890 </p>
                 </div>
               </div>
             </div>
@@ -247,11 +232,11 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Notification Preview */}
+      {}
       <NotificationPreview />
       
-      {/* Floating Chatbot */}
-      <FloatingChatbot />
+      {}
+
     </div>
   );
 };

@@ -5,7 +5,6 @@ interface VetProfileCardProps {
   name: string;
   specialty: string;
   experience: number;
-  education: string;
   image?: string;
   description: string;
 }
@@ -14,7 +13,6 @@ export function VetProfileCard({
   name,
   specialty,
   experience,
-  education,
   image,
   description
 }: VetProfileCardProps) {
@@ -37,13 +35,12 @@ export function VetProfileCard({
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
           <span className="font-medium">Experience:</span> {experience} years
         </div>
-        
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-          <span className="font-medium">Education:</span> {education}
-        </div>
-        
+
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
     </div>
   );
 }
+
+        
+        

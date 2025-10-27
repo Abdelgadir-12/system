@@ -1,11 +1,10 @@
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function HeroSection() {
   return (
     <section className="pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden relative">
-      {/* Background decoration */}
+      {}
       <div className="absolute top-0 left-0 w-full h-full -z-10 overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-[80%] bg-gradient-to-b from-pet-blue/10 to-transparent rounded-b-[50%]"></div>
         <div className="absolute top-20 right-[5%] w-64 h-64 rounded-full bg-pet-teal/10 blur-3xl"></div>
@@ -52,21 +51,17 @@ export function HeroSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
               
-              {/* Floating card */}
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-xs bg-white/90 backdrop-blur-sm rounded-xl p-4 shadow-lg">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 rounded-full bg-pet-teal/20 flex items-center justify-center shrink-0">
-                    <span className="text-pet-teal-dark text-xl font-bold">24</span>
+                    <span className="text-pet-teal-dark text-xl font-bold"></span>
                   </div>
-                  <div>
-                    <h3 className="font-medium">Emergency Care Available</h3>
-                    <p className="text-sm text-muted-foreground">Our team is available 24/7 for urgent pet care needs</p>
-                  </div>
+                  <div></div>
                 </div>
               </div>
             </div>
             
-            {/* Decoration elements */}
+            {}
             <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] h-[90%] rounded-3xl border-2 border-dashed border-pet-teal/30"></div>
             <div className="absolute -z-10 -bottom-6 -right-6 w-32 h-32 bg-pet-blue/10 rounded-full blur-xl"></div>
           </div>
