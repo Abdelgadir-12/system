@@ -321,7 +321,7 @@ export function AppointmentForm() {
         const storageMethod = isSupabaseSuccess ? 'database' : 'local storage';
         toast({
           title: "Appointment Booked Successfully!",
-          description: `Your appointment has been saved to ${storageMethod} and a confirmation email has been sent.`,
+          description: `Your appointment has been saved successfully.`,
         });
       } else {
         throw new Error('No appointment data returned from save operation');
