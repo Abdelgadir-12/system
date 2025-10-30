@@ -72,10 +72,8 @@ export function AppointmentSuccessDialog({
             Booking Successful!
           </DialogTitle>
           <DialogDescription className="text-center">
-            Your appointment has been successfully booked. You can view and manage all your appointments in the "My Appointments" section.
+            Your appointment has been successfully booked. You can view and manage your booking in the "My Appointments" section.
           </DialogDescription>
-          
-          {/* Email confirmation removed */}
         </DialogHeader>
         
         <div className="space-y-4">
