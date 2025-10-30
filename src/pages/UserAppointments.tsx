@@ -144,18 +144,7 @@ const UserAppointments = () => {
                     </div>
                     
                     <div className="mt-4 flex justify-end space-x-2">
-                      {/* Notes Button removed */}
-                      
-                      {/* Reschedule Button - Only for scheduled appointments */}
-                      {apt.status !== "cancelled" && apt.status !== "completed" && (
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={() => navigate(`/appointment?reschedule=${apt.id}`)}
-                        >
-                          Reschedule
-                        </Button>
-                      )}
+                      {/* Reschedule option removed for booked appointments per request */}
                     </div>
                   </CardContent>
                 </Card>
