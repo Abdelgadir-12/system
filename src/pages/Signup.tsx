@@ -69,8 +69,7 @@ const Signup = () => {
       
       if (success) {
         toast({
-          title: "Account created successfully!",
-          description: "You can now log in with your email and password.",
+          title: "Signed up",
         });
         navigate("/login");
       } else {
