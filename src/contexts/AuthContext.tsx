@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { User, Pet, Appointment } from "@/types/auth";
 import { usePetManagement } from "@/hooks/usePetManagement";
-import { getSessionUser, verifyCredentials, setLocalSession, clearLocalSession } from "@/utils/localAuth";
+import { getSessionUser, verifyCredentials, setLocalSession, clearLocalSession, createLocalUser } from "@/utils/localAuth";
 
 
 type AuthContextType = {
@@ -217,48 +217,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
+    // Create a local-only user and do NOT call Supabase.
+    // Local users are stored in localStorage and won't be created on the remote website.
     try {
-      const normalizedEmail = email.trim().toLowerCase();
-      console.log('Starting signup process for:', normalizedEmail);
-      
-      // Step 1: Create user account with metadata
-      const { data, error } = await supabase.auth.signUp({
-        email: normalizedEmail,
-        password,
-        options: {
-          data: {
-            name: name.trim(),
-            email: normalizedEmail
-          },
-          emailRedirectTo: `${window.location.origin}/login`
-        }
-      });
-
-      if (error) {
-        console.error('Signup error:', error);
-        
-        // Handle specific error cases
-        if (error.message.includes('User already registered')) {
-          throw new Error('Account already exists. Please try logging in.');
-        }
-        throw new Error(error.message);
-      }
-
-      if (data.user) {
-        console.log('User created successfully:', data.user.id);
-        console.log('Email confirmation sent:', data.user.email_confirmed_at ? 'Confirmed' : 'Pending');
-        
-        // The database trigger should automatically create the profile
-        // We don't need to manually create it here
-        console.log('Profile will be created automatically by database trigger');
-        
-        return true;
-      }
-
-      return false;
-    } catch (error: any) {
-      console.error('Signup failed:', error);
-      throw new Error(error?.message || 'Signup failed');
+      const user = createLocalUser(name, email, password);
+      // set in-memory user and local session so the app treats the user as signed up
+      setUser(user);
+      setLocalSession(user.id);
+      return true;
+    } catch (error: unknown) {
+      console.error('Local signup failed:', error);
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(message || 'Signup failed');
     }
   };
 
@@ -285,9 +255,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       setUser({ ...user, ...updates });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Profile update error:', error);
-      throw new Error(error?.message || 'Unknown profile update error');
+      const message = error instanceof Error ? error.message : String(error);
+      throw new Error(message || 'Unknown profile update error');
     }
   };
 
