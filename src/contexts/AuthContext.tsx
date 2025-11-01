@@ -4,13 +4,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { User, Pet, Appointment } from "@/types/auth";
 import { usePetManagement } from "@/hooks/usePetManagement";
-import { createLocalUser, verifyCredentials, setLocalSession, clearLocalSession, getSessionUser, updateStoredUser, findUserByEmail } from "@/utils/localAuth";
+import { getSessionUser, verifyCredentials, setLocalSession, clearLocalSession } from "@/utils/localAuth";
 
-export type AuthContextType = {
+
+type AuthContextType = {
   user: User | null;
   login: (email: string, password: string) => Promise<{ success: boolean; isAdmin?: boolean }>;
   signup: (name: string, email: string, password: string) => Promise<boolean>;
-  logout: () => Promise<void>;
+  logout: () => void;
   updateUserProfile: (updates: Partial<User>) => Promise<void>;
   getUserPets: () => Promise<Pet[]>;
   addPet: (pet: Omit<Pet, 'id' | 'ownerId'>) => Promise<Pet>;
@@ -25,7 +26,6 @@ export type AuthContextType = {
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-export { AuthContext };
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -34,187 +34,297 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const petManagement = usePetManagement(user);
 
-  // load profile from supabase if available
-  const loadProfileFromSession = async (s: Session | null) => {
-    if (!s?.user) return null;
-    const base: User = {
-      id: s.user.id,
-      name: s.user.user_metadata?.name || s.user.email?.split('@')[0] || 'User',
-      email: s.user.email || '',
-      role: s.user.email === 'admin@example.com' ? 'admin' : 'customer',
-    };
-
-    try {
-      const { data: profile, error } = await supabase.from('profiles').select('*').eq('id', s.user.id).maybeSingle();
-      if (error) {
-        console.warn('Profile fetch warning:', error.message || error);
-        return base;
-      }
-      if (profile) return { ...base, ...profile } as User;
-      return base;
-    } catch (err) {
-      console.error('Error loading profile:', err);
-      return base;
-    }
-  };
-
+  // Initialize auth state
   useEffect(() => {
-    let mounted = true;
+    let isMounted = true;
+    
+    console.log("Setting up auth state listener");
+    
+    // Set up auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state change:', event, session?.user?.email);
+        
+        if (!isMounted) return;
+        
+        setSession(session);
+        
+        if (session?.user) {
+          console.log("User session found, creating user profile");
+          
+          // Create user profile immediately from session data
+          const userProfile: User = {
+            id: session.user.id,
+            name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+            email: session.user.email || '',
+            role: 'customer',
+          };
 
-    const setup = async () => {
-      // Subscribe to Supabase auth changes
-      const { data } = supabase.auth.onAuthStateChange(async (_event, sess) => {
-        if (!mounted) return;
-        setSession(sess ?? null);
+          // Check if this is an admin user (based on email)
+          if (session.user.email === 'admin@example.com') {
+            userProfile.role = 'admin';
+          }
 
-        if (sess?.user) {
-          const u = await loadProfileFromSession(sess);
-          if (mounted) setUser(u);
+          console.log("Setting user profile:", userProfile);
+          if (isMounted) {
+            setUser(userProfile);
+          }
+
+          // Try to fetch profile from database asynchronously (don't block login)
+          // Use a timeout to wait for the database trigger to create the profile
+          setTimeout(async () => {
+            if (!isMounted) return;
+            
+            try {
+              console.log("Attempting to fetch profile from database");
+              
+              // Wait a bit for the trigger to complete, then try to fetch the profile
+              // The database trigger should automatically create the profile
+              const { data: fullProfile, error: fullError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', session.user.id)
+                .maybeSingle();
+              
+              if (fullProfile && !fullError && isMounted) {
+                console.log("Full profile loaded:", fullProfile);
+                setUser({
+                  id: fullProfile.id,
+                  name: fullProfile.name,
+                  email: fullProfile.email,
+                  role: fullProfile["role"] as "admin" | "customer",
+                  phone: fullProfile.phone,
+                  address: fullProfile.address,
+                });
+              } else if (fullError) {
+                console.log("Profile fetch error (will retry on next login):", fullError);
+                // Don't block login - the trigger might take time or there might be RLS issues
+                // The user can still use the app with the basic profile from session
+              } else {
+                console.log("Profile not found yet - trigger may still be processing");
+                // Profile might not be created yet by the trigger
+                // Don't block login - use the session profile for now
+              }
+            } catch (error) {
+              console.log("Profile fetch error:", error);
+              // Don't block login for profile errors
+            }
+          }, 1000);
         } else {
-          // No supabase session: check for local session (locally created user)
-          const local = getSessionUser();
-          if (local && mounted) {
-            setUser(local);
-          } else if (mounted) {
-            setUser(null);
+          console.log("No Supabase user session, checking local session");
+          if (isMounted) {
+            const localUser = getSessionUser();
+            if (localUser) {
+              console.log("Local session found for:", localUser.email);
+              setUser(localUser);
+            } else {
+              console.log("No local session found, clearing user state");
+              setUser(null);
+            }
           }
         }
-
-        if (mounted) setIsLoading(false);
-      });
-
-      // initial session
-      try {
-        const { data: { session: initialSession }, error } = await supabase.auth.getSession();
-        if (error) console.warn('getSession error:', error.message || error);
-        if (initialSession?.user) {
-          const u = await loadProfileFromSession(initialSession);
-          if (mounted) setUser(u);
-        } else {
-          const local = getSessionUser();
-          if (local && mounted) setUser(local);
+        
+        if (isMounted) {
+          setIsLoading(false);
         }
-      } catch (err) {
-        console.error('Initial session error:', err);
-      } finally {
-        if (mounted) setIsLoading(false);
       }
+    );
 
-      return () => {
-        mounted = false;
-        // unsubscribe if available
-        try {
-          type MaybeSub = { subscription?: { unsubscribe?: () => void } };
-          const sub = (data as unknown as MaybeSub)?.subscription;
-          if (sub && typeof sub.unsubscribe === 'function') sub.unsubscribe();
-        } catch (e) {
-          console.warn('Failed to unsubscribe auth listener', e);
+    // Get initial session
+    const getInitialSession = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+          console.error("Error getting session:", error);
         }
-      };
+        console.log("Initial session:", session?.user?.email);
+        
+        if (isMounted) {
+          setSession(session);
+          if (!session) {
+            // If there's no Supabase session, try local session
+            const localUser = getSessionUser();
+            if (localUser) {
+              console.log("Setting user from local session:", localUser.email);
+              setUser(localUser);
+            }
+            setIsLoading(false);
+          }
+        }
+      } catch (error) {
+        console.error("Session check error:", error);
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
     };
 
-    const disposer = setup();
-    return () => { mounted = false; };
+    getInitialSession();
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const login = async (email: string, password: string): Promise<{ success: boolean; isAdmin?: boolean }> => {
-    // Try Supabase first
+    console.log("Login attempt for:", email);
+    
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      console.log("Login response:", { user: data.user?.email, error: error?.message });
+
       if (error) {
-        // Supabase auth failed; try local
-        console.warn('Supabase login error, falling back to local:', error.message || error);
+        console.error('Supabase login error:', error.message);
       }
-      if (data?.user) {
-        const u = await loadProfileFromSession({ user: data.user } as Session);
-        setUser(u);
-        setSession({} as Session);
-        return { success: true, isAdmin: data.user.email === 'admin@example.com' };
-      }
-    } catch (err) {
-      console.error('Supabase login exception:', err);
-    }
 
-    // Local fallback
-    try {
-      const local = verifyCredentials(email, password);
-      if (local) {
-        setUser(local);
-  try { setLocalSession(local.id); } catch (e) { console.warn('setLocalSession failed', e); }
-        return { success: true, isAdmin: local.role === 'admin' };
+      if (data.user) {
+        console.log("Login successful for:", data.user.email);
+        const isAdmin = data.user.email === 'admin@example.com';
+        return { success: true, isAdmin };
       }
-    } catch (err) {
-      console.error('Local login error:', err);
-    }
+      
+      // If Supabase login failed or returned no user, try local auth fallback
+      const localUser = verifyCredentials(email, password);
+      if (localUser) {
+        console.log("Local login successful for:", localUser.email);
+        setUser(localUser);
+        setLocalSession(localUser.id);
+        const isAdmin = localUser.role === 'admin';
+        return { success: true, isAdmin };
+      }
 
-    return { success: false };
+      return { success: false };
+    } catch (error) {
+      console.error('Login error:', error);
+      // On unexpected errors, still attempt local auth
+      try {
+        const localUser = verifyCredentials(email, password);
+        if (localUser) {
+          console.log("Local login successful after error for:", localUser.email);
+          setUser(localUser);
+          setLocalSession(localUser.id);
+          const isAdmin = localUser.role === 'admin';
+          return { success: true, isAdmin };
+        }
+      } catch {}
+      return { success: false };
+    }
   };
 
   const signup = async (name: string, email: string, password: string): Promise<boolean> => {
     try {
-      const user = createLocalUser(name, email, password);
-      // Auto-login local user
-    try { setLocalSession(user.id); } catch (e) { console.warn('setLocalSession failed', e); }
-      setUser(user);
-      return true;
-    } catch (err) {
-      console.error('Local signup error:', err);
-      throw err;
+      const normalizedEmail = email.trim().toLowerCase();
+      console.log('Starting signup process for:', normalizedEmail);
+      
+      // Step 1: Create user account with metadata
+      const { data, error } = await supabase.auth.signUp({
+        email: normalizedEmail,
+        password,
+        options: {
+          data: {
+            name: name.trim(),
+            email: normalizedEmail
+          },
+          emailRedirectTo: `${window.location.origin}/login`
+        }
+      });
+
+      if (error) {
+        console.error('Signup error:', error);
+        
+        // Handle specific error cases
+        if (error.message.includes('User already registered')) {
+          throw new Error('Account already exists. Please try logging in.');
+        }
+        throw new Error(error.message);
+      }
+
+      if (data.user) {
+        console.log('User created successfully:', data.user.id);
+        console.log('Email confirmation sent:', data.user.email_confirmed_at ? 'Confirmed' : 'Pending');
+        
+        // The database trigger should automatically create the profile
+        // We don't need to manually create it here
+        console.log('Profile will be created automatically by database trigger');
+        
+        return true;
+      }
+
+      return false;
+    } catch (error: any) {
+      console.error('Signup failed:', error);
+      throw new Error(error?.message || 'Signup failed');
     }
   };
 
-  const logout = async (): Promise<void> => {
-    try { await supabase.auth.signOut(); } catch (e) { console.warn('supabase.signOut failed', e); }
-    try { clearLocalSession(); } catch (e) { console.warn('clearLocalSession failed', e); }
+  const logout = async () => {
+    await supabase.auth.signOut();
+    clearLocalSession();
     setUser(null);
     setSession(null);
   };
 
-  const updateUserProfile = async (updates: Partial<User>): Promise<void> => {
+  const updateUserProfile = async (updates: Partial<User>) => {
     if (!user) return;
 
-    // If there's a stored local user with this email, update local storage
     try {
-      const stored = findUserByEmail(user.email || '');
-      if (stored) {
-        updateStoredUser(stored.id, updates);
-        setUser({ ...user, ...updates });
-        return;
+      console.log('Updating user profile with:', updates);
+      const { error } = await supabase
+        .from('profiles')
+        .update(updates)
+        .eq('id', user.id);
+
+      if (error) {
+        console.error('Profile update error:', error.message);
+        throw new Error(error.message);
       }
-    } catch (err) {
-      console.warn('Error checking local user storage:', err);
-    }
 
-    // Otherwise update Supabase profile
-    try {
-      const { error } = await supabase.from('profiles').update(updates).eq('id', user.id);
-      if (error) throw error;
       setUser({ ...user, ...updates });
-    } catch (err) {
-      console.error('Failed to update profile in Supabase:', err);
-      throw err;
+    } catch (error: any) {
+      console.error('Profile update error:', error);
+      throw new Error(error?.message || 'Unknown profile update error');
     }
   };
 
-  const contextValue: AuthContextType = {
-    user,
-    login,
-    signup,
-    logout,
-    updateUserProfile,
-    getUserPets: petManagement.getUserPets,
-    addPet: petManagement.addPet,
-    updatePet: petManagement.updatePet,
-    deletePet: petManagement.deletePet,
-    getPetById: petManagement.getPetById,
-    calculatePetAge: petManagement.calculatePetAge,
-    getUserAppointments: petManagement.getUserAppointments,
-    isAuthenticated: !!user,
-    isAdmin: user?.role === 'admin',
-    isLoading,
-  };
+  const isAuthenticated = !!user;
+  const isAdmin = user?.role === "admin";
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  console.log("Auth context state:", { 
+    isAuthenticated, 
+    isAdmin, 
+    isLoading, 
+    userEmail: user?.email,
+    sessionExists: !!session 
+  });
+
+  return (
+    <AuthContext.Provider 
+      value={{ 
+        user, 
+        login, 
+        signup, 
+        logout,
+        updateUserProfile,
+        ...petManagement,
+        isAuthenticated, 
+        isAdmin,
+        isLoading
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-// NOTE: useAuth hook is exported from a separate file `src/contexts/useAuth.ts`
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
